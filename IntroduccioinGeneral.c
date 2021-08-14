@@ -7,15 +7,28 @@ main(){
     int F, C;
     int low, up, step;
 
-    low=0; //Limite inferior de la tabla
+    /*low=0; //Limite inferior de la tabla
     up=300; //Limite superior 
     step= 20; //tamaño del incremento
 
     F=low;
+    printf("Fahrenheit\tCelsius \n");
     while (F<=up){
         C= 5*(F-32)/9;
-        printf("%3d\t%6d\n", F, C);
+        printf("%3d\t%11d\n", F, C);
         F= F+ step;
+    }*/
+
+    low=0; //Limite inferior de la tabla
+    up=160; //Limite superior 
+    step= 20; //tamaño del incremento
+
+    C=low;
+    printf("Celsius\tFahrenheit \n");
+    while (C<=up){
+        F=((C/5)*9)+32;
+        printf("%3d\t%7d\n", C, F);
+        C= C+ step;
     }
 
     /*Se multiplica por 5 y después se divide entre 9, en vez de multiplicar por 5/9 
