@@ -4,10 +4,16 @@ una tabla de temperaturas Fahrenheit y sus equivalentes centígrados o
 Celsius:*/
 
 main(){
+
+    #define LOWER 0   /*Límite inferior de la tabla*/
+    #define UPPER 300  /*Límite superior*/
+    #define STEP 20    /*Tamaño de incremento*/
+
     int F;
 
-    for(F=300; F>=0; F=F-20){
+    for( F=LOWER; F<= UPPER ; F=F+STEP ) {
         printf("%3d%6.1f\n", F, (5.0/9.0)*(F-32));
     }
+
 
 }
