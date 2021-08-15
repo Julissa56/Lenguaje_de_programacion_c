@@ -1,19 +1,21 @@
 #include <stdio.h>
- /*El siguiente programa utiliza la fórmula °C = (5/9) (°F-32) para imprimir
-una tabla de temperaturas Fahrenheit y sus equivalentes centígrados o
-Celsius:*/
+ /*Programa que copia la entrada en la salida, un carácter a la vez:*/
 
 main(){
+    int c;
 
-    #define LOWER 0   /*Límite inferior de la tabla*/
-    #define UPPER 300  /*Límite superior*/
-    #define STEP 20    /*Tamaño de incremento*/
+    printf("EOF es igual a:%d\ngetchar() !=EOF es igual a: %d \n\n", EOF, getchar() != EOF);
 
-    int F;
-
-    for( F=LOWER; F<= UPPER ; F=F+STEP ) {
-        printf("%3d%6.1f\n", F, (5.0/9.0)*(F-32));
+    while((c=getchar()) != EOF){
+        putchar(c);
     }
-
+    /*
+    -Cualquier tipo de entero puede usarse para almacenar char
+    -El problema es distinguir el fin de la entrada de los datos válidos
+    -Getchár devuelve un valor distintivo cuando no hay más a la entrada, 
+        un valor que no puede ser confundido con ningún otro carácter.
+    -EOF “end of file (fin de archivo)”, un entero definido en <stdio.h>
+    - Int es lo suficientemente grande para mantener EOF, char no
+    */
 
 }
