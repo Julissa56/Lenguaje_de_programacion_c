@@ -1,21 +1,18 @@
 #include <stdio.h>
- /*Programa que copia la entrada en la salida, un carácter a la vez:*/
+ /*El siguiente programa cuenta caracteres y es semejante al programa que copia la entrada 
+   en la salida un caracter a la vez*/
 
 main(){
-    int c;
+    double NumChar;
 
-    printf("EOF es igual a:%d\ngetchar() !=EOF es igual a: %d \n\n", EOF, getchar() != EOF);
-
-    while((c=getchar()) != EOF){
-        putchar(c);
+    for(NumChar=0; getchar()!=EOF; ++NumChar){
+        printf("%.0f\n", NumChar);        ;
     }
+
+
     /*
-    -Cualquier tipo de entero puede usarse para almacenar char
-    -El problema es distinguir el fin de la entrada de los datos válidos
-    -Getchár devuelve un valor distintivo cuando no hay más a la entrada, 
-        un valor que no puede ser confundido con ningún otro carácter.
-    -EOF “end of file (fin de archivo)”, un entero definido en <stdio.h>
-    - Int es lo suficientemente grande para mantener EOF, char no
+    Los operadores + + y -- pueden ser tanto operadores prefijos (+ +NumChar) como postfijos (NumChar + +); 
+    esas dos formas tienen diferentes valores dentro de las expresiones (A demostrar proximamente)
     */
 
 }
