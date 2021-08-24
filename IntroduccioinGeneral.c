@@ -1,43 +1,53 @@
-/*El siguiente programa cuenta las líneas, 
-palabras y caracteres  usando la definición de que 
-una palabra es cualquier secuencia de caracteres que no 
-contiene espacio en blanco ni tabulación ni nueva línea*/
+/*El siguiente programa cuenta dígitos, espacios en blanco 
+y otros caracteres 
+*/
   
 
 #include <stdio.h>
 
-#define IN	1	//dentro de una palabra
-#define OUT 0	//fuera de una palabra
-
 void main()
 {
-	int c, numCaracter, numPalabra, numLinea, state;
+	int c, i, num_blancos, num_otros;
+	int num_digitos[10];
 
-	state =OUT;
-	numCaracter = numLinea = numPalabra =0;
+	num_blancos=num_otros=0;
 
-	while((c=getchar())!=EOF){
-		++numCaracter;
-		if(c=='\n'){
-			++numLinea;
-		}
-		if(c==' ' || c=='\n' || c=='\t'){
-			state= OUT;
-		}
-		else if(state==OUT){
-			state=IN;
-			++numPalabra;	
-		} 	 
+	for (i = 0; i < 10; ++i)
+	{
+		num_digitos[i]=0;
 	}
-	printf("Lineas: %d	Palabras:%d  Caracteres:%d\n", numLinea, numPalabra, numCaracter);
+
+	while ((c=getchar())!=EOF)
+	{
+		if(c>='0' && c<='9'){						//Determina si el caracter c es un digito
+			++num_digitos[c-'0'];					//Valor numerico del digito
+		}
+		else if(c==' ' || c=='\n' || c=='\t'){
+			++num_blancos;
+		}
+		else{
+			++num_otros;
+		}
+	}
+
+	printf("digitos: ");
+	for(i=0; i<10; ++i){
+		printf("%d ", num_digitos[i]);
+	}
+
+	printf(", espacios blancos: %d, otros:%d", num_blancos, num_otros);
+	
 	
 }
 
 /*
--Las constantes simbólicas IN y OUT hacen el programa más legible
--Las asignaciones se asocian de derecha a izquierda
-- El operador ¡¡ significa “O”
--La precedencia del AND es mass grande que la del OR
--Las expresiones con AND o OR se evaluan de izquierda a derecha
+-Es conveniente utilizar un arreglo para mantener el número de ocurrencias
+	en lugar de tener diez variables individuales
+-Num_digitos es un arreglo de 10 enteros
+-Los subindices es lo que esta entre corchetes cuadrados
+-los char son sólo pequeños enteros
+-Las condiciones se evalúan hasta que alguna condicion se satisface
+- Cuando se omiten el else y la proposición finales, no tiene lugar ninguna acción. 
+
 */
 
