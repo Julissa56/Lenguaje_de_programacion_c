@@ -1,42 +1,52 @@
-/*El siguiente programa cuenta dígitos, espacios en blanco 
-y otros caracteres 
+/*El siguiente programa imprime el histograma de las longitudes
+de las palabras de su entrada. 
+Se toma la definicion de: 0 caracteres es "espacio en blanco", 1 caracter es "letra",
+	2 o mas caraxteres son palabras.
 */
   
 
 #include <stdio.h>
+#define MAX 12		//Maximo de caracteres que consideraremos para una palabra
+#define MIN 2		//Minimo de caracteres que debe tener una palabra
 
 void main()
 {
-	int c, i, num_blancos, num_otros;
-	int num_digitos[10];
+	int c, i, j, longitud;
+	int num_letras[MAX];
 
-	num_blancos=num_otros=0;
-
-	for (i = 0; i < 10; ++i)
+	for (i = 0; i < MAX; ++i)
 	{
-		num_digitos[i]=0;
+		num_letras[i]=0;
 	}
 
 	while ((c=getchar())!=EOF)
 	{
-		if(c>='0' && c<='9'){						//Determina si el caracter c es un digito
-			++num_digitos[c-'0'];					//Valor numerico del digito
+		if(c==' ' || c=='\t' || c=='\n' || c=='.' || c==','){
+			
+			if(longitud>=MIN){				//Significa que una palabra acabo y aun nos queda su longitud en memoria
+				++num_letras[longitud-MIN];	
+			}
+			if(longitud>=MAX){
+				++num_letras[MAX-1];
+			}
+			
+			longitud=0;
 		}
-		else if(c==' ' || c=='\n' || c=='\t'){
-			++num_blancos;
-		}
-		else{
-			++num_otros;
+		else {
+			++longitud;
 		}
 	}
 
-	printf("digitos: ");
-	for(i=0; i<10; ++i){
-		printf("%d ", num_digitos[i]);
-	}
+	printf("Histograma de longitud de palabras: \n\n");
 
-	printf(", espacios blancos: %d, otros:%d", num_blancos, num_otros);
 	
+	for(i=0; i<MAX-1; ++i){
+		printf("%2d |", i+2);
+		for(j=1; j<=num_letras[i] ; j++){
+			printf("o");
+		}
+		printf("\n");
+	}
 	
 }
 
