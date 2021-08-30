@@ -1,29 +1,40 @@
 /*
-	Escribir la función power(m,n), que eleva un entero m a una potencia entera y positiva n
+	Escriba de nuevo el programa de conversión de temperatura de
+	la sección 1.2, de modo que utilice una función para la conversión
 */
   
 
 #include <stdio.h>
 
-int power(int base, int n){
-	int i, p;
+void ConversionC_F(int C, int up, int step);	
 
-	p=1;
-	for(i=1; i<=n; ++i){
-		p=p*base;
-	}
-	return p;
-}
 
 void main()
 {
-	int i;
+	int C;
+    int minimo, maximo, paso;
 
-	for(i=0; i<10; ++i){
-		printf("%d  %d  %2d\n", i, power(2,i), power(-3,i));
+    minimo=0; //Limite inferior de la tabla
+    maximo=160; //Limite superior 
+    paso= 20; //tamaño del incremento
+    C=minimo;
+
+	
+    ConversionC_F(C, maximo, paso);
+
+
+}
+
+void ConversionC_F(int C, int up, int step){
+	int F; 
+
+	printf("Celsius\tFahrenheit \n");
+	while (C<=up){
+		F=((C/5)*9)+32;
+		printf("%3d\t%7d\n", C, F);
+		C= C+ step;
 	}
-
-
+	//return F;
 }
 
 /*
