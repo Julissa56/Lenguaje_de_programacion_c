@@ -1,53 +1,80 @@
-/*El siguiente programa imprime el histograma de las longitudes
-de las palabras de su entrada. 
-Se toma la definicion de: 0 caracteres es "espacio en blanco", 1 caracter es "letra",
+/*
+-El siguiente programa imprime el histograma de frecuencias con que se presentan diferentes 	
+	caracteres leidos a su entrada. 
+-Se toma la definicion de: 0 caracteres es "espacio en blanco", 1 caracter es "letra",
 	2 o mas caraxteres son palabras.
+-Letras mayusculas y minusculas entran en la misma categoria de frecuencias
+
+Codigo ASCCI:
+	65-90:	A-Z
+	97-122: a-z
+	48-57:	0-9
 */
   
 
 #include <stdio.h>
-#define MAX 12		//Maximo de caracteres que consideraremos para una palabra
-#define MIN 2		//Minimo de caracteres que debe tener una palabra
+#define MAX 	28		//Letras(0:A, 26:Z), numeros(1) y otro tipo de caracteres(1)
+#define NUMERO	26
+#define OTRO	27
+#define FMIN 	1		//Frecuencia minima de lectura en consola
 
 void main()
 {
-	int c, i, j, longitud;
-	int num_letras[MAX];
+
+	/* VARIABLES */
+	int c, i, j, caracter;
+	int contador_caracteres[MAX];
 
 	for (i = 0; i < MAX; ++i)
 	{
-		num_letras[i]=0;
+		contador_caracteres[i]=0;
 	}
 
+
+	/* RECEPCIÓN DE CARACTER Y CONTEO */
 	while ((c=getchar())!=EOF)
 	{
-		if(c==' ' || c=='\t' || c=='\n' || c=='.' || c==','){
-			
-			if(longitud>=MIN){				//Significa que una palabra acabo y aun nos queda su longitud en memoria
-				++num_letras[longitud-MIN];	
-			}
-			if(longitud>=MAX){
-				++num_letras[MAX-1];
-			}
-			
-			longitud=0;
+		if(c>='A' && c<='Z'){					//Frecuencia de letras (mayuscula)
+			++contador_caracteres[c- 'A'];
 		}
-		else {
-			++longitud;
+		else if(c>='a' && c<='z'){				//Frecuencia de letras (minusculas)
+			++contador_caracteres[c- 'a'];
+		}
+		else if(c>='0' && c<='9'){				//Frecuencia de numeros
+			++contador_caracteres[NUMERO];
+		}
+		else{									//Freccuencias de otros caracteres
+			++contador_caracteres[OTRO];
 		}
 	}
 
-	printf("Histograma de longitud de palabras: \n\n");
+
+	/* IMPRESIÓN */
+	printf("Histograma de frecuencia de caracteres: \n\n");
 
 	
-	for(i=0; i<MAX-1; ++i){
-		printf("%2d |", i+2);
-		for(j=1; j<=num_letras[i] ; j++){
-			printf("o");
+	for(i=0; i<NUMERO; ++i){					//Frecuencia de letras
+		if(contador_caracteres[i]>= FMIN){
+			printf("%4c |", i+65);
+			for(j=FMIN; j<=contador_caracteres[i] ; j++){	
+				printf("o");
+			}
+			printf("\n");
 		}
-		printf("\n");
 	}
 	
+	printf(" Num |");							//Frecuencia de numeros
+	for(j=FMIN; j<=contador_caracteres[NUMERO] ; j++){
+		printf("o");
+	}
+	printf("\n");
+
+	printf("Otro |");							//Frecuencia de otros
+	for(j=FMIN; j<=contador_caracteres[OTRO] ; j++){
+		printf("o");
+	}
+	printf("\n");
+
 }
 
 /*
