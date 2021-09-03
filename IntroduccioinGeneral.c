@@ -1,8 +1,7 @@
 /*
-	Ejercicio 1-18. Escriba un programa que elimine los blancos y los tabuladores
-	que estén al final de cada línea de entrada, y que borre completamente las líneas
-	en blanco. □
- 
+	Ejercicio 1-19. Escriba una función reverse(s) que invierta la cadena
+	de caracteres s.
+	Usela para escribir un programa que invierta su entrada linea a linea.
 */
   
 
@@ -16,44 +15,34 @@
 
 
 int obtener_linea(char line[], int maxline);				//Funciones prototipo
-void copiar(char hacia[], char desde[]);
-void agregar(char anterior[], char nueva[]);
-void ImprimirLineasVariables(int conteo[], int limite);
+int copiar(char hacia[], char desde[]);						//Modifican la cadena y devuelve el subindice de la ultima posicion escrita
+int agregar(char anterior[], char nueva[]);
+void reverse(int bandera, char msg[], int ultimo);
 
 
 void main()
 {
 	int longitud, max_lon=0, state=FLINE, i=0;
+	int fin_msg;
 	char line[MAXLINE];
 	char mayor[MAXLINE];
-	int  conteoMayores80[MAXLINE];
 
 	while((longitud=obtener_linea(line, MAXLINE))>0){		//Obtiene la longitud de la linea
 		
-		if((longitud> MIN) && (state ==MLINE)){				//Si no es la primer linea con el minimo de caracteres
-			agregar(mayor, line);
-		}
 		if((longitud > MIN) && (state==FLINE)){				//Si es la primer linea con el minimno de caracteres
 			max_lon=longitud;
-			copiar(mayor, line);
+			fin_msg=copiar(mayor, line);
 			state=MLINE;
 		}
-	}
-
-	if(max_lon>0){											//Hubo una linea							
-		//printf("%s", mayor);								//Imprime las lineas almacenadas
-		for(i=0; mayor[i]!='\0'; ++i){						//Imprime las lineas almacenadas verificando que se hayan borrado los espacios en blanco al final
-			if(mayor[i]==' ' || mayor[i]=='\t'){
-				printf("%c",35);							//Verificación mediante reemplazo de blancos por simbbolo de gato
-			}
-			else{
-				printf("%c",mayor[i]);
-			}
+		else if((longitud> MIN) && (state ==MLINE)){		//Si no es la primer linea con el minimo de caracteres
+			fin_msg=agregar(mayor, line);
 		}
-
 	}
-	
+
+	reverse(max_lon, mayor, fin_msg);
+
 }
+
 
 int obtener_linea(char string[], int limite){				//Lee una linea en s y regresa su longitud
 	int c, i, blanco=0;
@@ -80,29 +69,39 @@ int obtener_linea(char string[], int limite){				//Lee una linea en s y regresa 
 	return i;
 }
 
-void copiar(char to[], char from[]){					//Copia 'from' en 'to'
+int copiar(char to[], char from[]){							//Copia 'from' en 'to'
 	int i=0;
 
 	while((to[i]=from[i]) != '\0'){
 		++i;
 	}
+	return i;
 }
 
-void agregar(char anterior[], char nueva[]){
+int agregar(char anterior[], char nueva[]){					//Busca el final de la ultima linea escrita y continua escribiendo
 	int i=0;
 	int j=0;
-	for(i=0; anterior[i]!='\0'; ++i){					//Encuentra donde acabo la ultima cadena
+	for(i=0; anterior[i]!='\0'; ++i){						//Encuentra donde acabo la ultima cadena
 		;
 	}
 
-	//anterior[i]='\n';									//Reemplaza el fin de string por un salto de linea
+	//anterior[i]='\n';										//Reemplaza el fin de string por un salto de linea
 	//++i;
     while((anterior[i]=nueva[j])!='\0'){					//Sigue escribiendo donde se quedó, hasta que encuentra el caracter fin de string
 		++i;
 		++j;
 	}
+	return i;
 }
 
+void reverse(int bandera, char msg[], int ultimo){			//Imprime la cadena de caracteres al reves linea por linea
+	int i;
+	if(bandera>0){											//Hubo una linea							
+		for(i=ultimo-1; i>=0; --i){							
+			printf("%c",msg[i]);
+		}
+	}
+}
 /*
 	-"PARAMETRO" una variable nombrada en la lista entre paréntesis de la definición de una función
 	-"ARGUMENTO" valor empleado al hacer la llamada de la función
