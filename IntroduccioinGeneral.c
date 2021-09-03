@@ -1,19 +1,21 @@
 /*
-	Ejercicio 1-17. Escriba un programa que imprima todas las líneas de entrada que
-	sean mayores de X caracteres. 
+	Ejercicio 1-18. Escriba un programa que elimine los blancos y los tabuladores
+	que estén al final de cada línea de entrada, y que borre completamente las líneas
+	en blanco. □
+ 
 */
   
 
 #include <stdio.h>
 #define MAXLINE		1000						//Tamaño máximo de la linea de entrada
-#define MIN			10							//Caracteres minimos para imprimir
+#define MIN			1							//Caracteres minimos para imprimir
 #define FLINE		1							//Primera linea que cumple con el minimo de caracteres
 #define MLINE		0							//Linea que cumple el minimo caracteres (no es la primera)
 
 
 
 
-int obtener_linea(char line[], int maxline);			//Funciones prototipo
+int obtener_linea(char line[], int maxline);				//Funciones prototipo
 void copiar(char hacia[], char desde[]);
 void agregar(char anterior[], char nueva[]);
 void ImprimirLineasVariables(int conteo[], int limite);
@@ -29,32 +31,46 @@ void main()
 	while((longitud=obtener_linea(line, MAXLINE))>0){		//Obtiene la longitud de la linea
 		
 		if((longitud> MIN) && (state ==MLINE)){				//Si no es la primer linea con el minimo de caracteres
-			conteoMayores80[i]=longitud;				//Posible reemplazo con funcion "Registro_Longitudes"
-			++i;
 			agregar(mayor, line);
 		}
 		if((longitud > MIN) && (state==FLINE)){				//Si es la primer linea con el minimno de caracteres
 			max_lon=longitud;
-			conteoMayores80[i]=longitud;
-			++i;
 			copiar(mayor, line);
 			state=MLINE;
 		}
 	}
 
-	if(max_lon>0){	//Hubo una linea							
-		printf("%s", mayor);
-		
+	if(max_lon>0){											//Hubo una linea							
+		//printf("%s", mayor);								//Imprime las lineas almacenadas
+		for(i=0; mayor[i]!='\0'; ++i){						//Imprime las lineas almacenadas verificando que se hayan borrado los espacios en blanco al final
+			if(mayor[i]==' ' || mayor[i]=='\t'){
+				printf("%c",35);							//Verificación mediante reemplazo de blancos por simbbolo de gato
+			}
+			else{
+				printf("%c",mayor[i]);
+			}
+		}
+
 	}
 	
 }
 
 int obtener_linea(char string[], int limite){				//Lee una linea en s y regresa su longitud
-	int c, i;
+	int c, i, blanco=0;
 
 	for(i=0; i< limite-1 && (c=getchar())!= EOF && c!='\n'; ++i ){
 		string[i]=c;
+		
+		if(c==' ' || c=='\t'){								//Si el ultimo caracter es un espacio en blanco
+			++blanco;
+		}
+	else{													//Si el ultimo caracter no fue blanco, reinicio de variable
+			blanco=0;
+		}
 	}
+
+	i=i-blanco;
+
 	if(c=='\n'){
 		string[i]=c;
 		++i;
